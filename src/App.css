@@ -24,3 +24,7 @@
   background-color: darkslategrey;
   color:azure
 }
+
+.button .active {
+  background-color: darkblue;
+}
