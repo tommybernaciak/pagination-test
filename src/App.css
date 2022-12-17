@@ -25,6 +25,11 @@
   color:azure
 }
 
-.button .active {
+.button.active {
   background-color: darkblue;
+  border-color: brown;
+}
+
+.dots {
+  color:azure
 }

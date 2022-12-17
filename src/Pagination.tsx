@@ -3,13 +3,18 @@ import Button from "./Button";
 
 export interface IProps {
   currentPage: number;
+  changeCurrentPage: (page: number) => void;
   pageCount: number;
 }
 
 const BUTTONS_LIMIT = 5;
 const MAX_SIBLING_COUNT = 2;
 
-const Pagination: FC<IProps> = ({ currentPage, pageCount }) => {
+const Pagination: FC<IProps> = ({
+  currentPage,
+  changeCurrentPage,
+  pageCount,
+}) => {
   const pages = Array.from({ length: pageCount }, (_, i) => i + 1);
   const isFirstPageActive = currentPage === 1;
   const isLastPageActive = currentPage === pageCount;
@@ -33,33 +38,39 @@ const Pagination: FC<IProps> = ({ currentPage, pageCount }) => {
 
   return (
     <div className="pagination" data-testid="pagination-root">
-      {!isFirstPageActive && (
-        <Button
-          testid="pagination-prev-button"
-          text={"prev"}
-          onClick={() => {}}
-        />
+      <Button
+        testid="pagination-prev-button"
+        text={"prev"}
+        onClick={() => changeCurrentPage(currentPage - 1)}
+        disabled={isFirstPageActive}
+      />
+      {showLeftDots && (
+        <div data-testid="left-dots" className="dots">
+          ...
+        </div>
       )}
-      {showLeftDots && <div data-testid="left-dots">...</div>}
       {visibleButtons.map((page: number) => {
         return (
           <Button
             key={page}
             testid={isCurrentPage(page) ? "pagination-current-page-button" : ""}
             text={`${page}`}
-            onClick={() => {}}
+            onClick={() => changeCurrentPage(page)}
             cssClass={isCurrentPage(page) ? "active" : ""}
           />
         );
       })}
-      {showRightDots && <div data-testid="right-dots">...</div>}
-      {!isLastPageActive && (
-        <Button
-          testid="pagination-next-button"
-          text={"next"}
-          onClick={() => {}}
-        />
+      {showRightDots && (
+        <div data-testid="right-dots" className="dots">
+          ...
+        </div>
       )}
+      <Button
+        testid="pagination-next-button"
+        text={"next"}
+        onClick={() => changeCurrentPage(currentPage + 1)}
+        disabled={isLastPageActive}
+      />
     </div>
   );
 };

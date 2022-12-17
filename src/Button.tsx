@@ -5,14 +5,16 @@ export interface IProps {
   onClick: () => void;
   testid?: string;
   cssClass?: string;
+  disabled?: boolean;
 }
 
-const Button: FC<IProps> = ({ text, onClick, testid, cssClass }) => {
+const Button: FC<IProps> = ({ text, onClick, testid, cssClass, disabled }) => {
   return (
     <button
       className={`button ${cssClass}`}
       onClick={onClick}
       data-testid={testid}
+      disabled={disabled}
     >
       {text}
     </button>
